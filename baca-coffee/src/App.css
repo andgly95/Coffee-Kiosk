@@ -1,0 +1,324 @@
+body {
+  background-image: url("./resources/coffee.jpg");
+  background-repeat: no-repeat;
+  /* overflow: hidden; */
+  background-attachment: fixed;
+}
+
+/*----App.js---*/
+
+.App {
+  text-align: center;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  align-items: center;
+  padding-left: 100px;
+  padding-right: 100px;
+  height: 1920px;
+  
+}
+
+.container {
+  width: 1080px;
+  height: 1920px;
+}
+
+.logo {
+  font-family: "FuturaMediumBT", "Trebuchet MS", Arial, sans-serif;
+  color: white;
+  font-size: 100px;
+  text-align: center;
+  text-shadow: 2px 2px rgb(125, 195, 238);
+  padding-top: 25px;
+  position: fixed;
+  top: 75px;
+}
+
+.selectorContainer {
+  display: flex;
+  /* flex: 4; */
+  flex-flow: column nowrap;
+  align-items: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  position: fixed;
+  top: 1150px;
+}
+
+.bottomrow {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1px;
+}
+
+/*---ConstructedDrink---*/
+
+.constructed {
+  background-color: #ADA996A0;
+  background: radial-gradient(#EAEAEA 25%, #ADA996C0 90%); 
+  border-radius: 50px;
+  width: 840px;
+  height: 840px;
+  margin: auto;
+  padding: 25px;
+  padding-top: 0px;
+  position: fixed;
+  top: 260px;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+constructedTop {
+  height: 600px;
+  margin-bottom: 200px;
+}
+
+constructedBottom {
+  top: 600px;
+  bottom: 0;
+}
+
+.description {
+  margin: 20px;
+  font-size: 22px;
+  height: 60px;
+}
+
+.bean-desc {
+  height: 90px;
+}
+
+.drink-desc {
+  height: 60px;
+  margin-top: 100px;
+}
+
+.milk-desc {
+  height: 30px;
+}
+
+.confirm {
+  padding: 10px;
+  margin: 10px;
+  margin-bottom: 30px;
+  
+  border: solid 3px black;
+  border-radius: 10px;
+  font-size: 24px;
+  text-align: center;
+  color: black;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  text-transform: uppercase;
+  width: 120px;
+  margin: auto;
+  
+}
+
+.unconfirmed {
+  opacity: .5;
+  pointer-events: none;
+}
+
+.cupImage {
+  position: absolute;
+  left: 200px;
+}
+
+.milkOverlay {
+  position: absolute;
+  background-image: url('./resources/milkoverlay.png');
+  background-repeat: no-repeat;
+  height: 500px;
+  width: 500px;
+  left: 200px;
+}
+
+
+blank {
+  height: 400px;
+  width: 400px;
+}
+
+/*---ItemSelection---*/
+
+.item {
+  margin: 10px;
+  width: 200px;
+  height: 200px;
+  background: #ADA996;  /* fallback for old browsers */
+  background: radial-gradient(#EAEAEA, #DBDBDB, #F2F2F2 25%, #ADA996 ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  border-radius: 10px;
+  box-sizing: border-box;
+  transition: 500ms;
+}
+
+.item-Choose {
+  border-color: crimson;
+  border-width: 3px;
+  border-style: solid;
+  transition: 500ms;
+
+}
+
+.itemSelected {
+  background: rgb(125, 195, 238);  /* fallback for old browsers */
+  background: radial-gradient(#E4E5E6, rgb(115, 177, 130)); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  border-radius: 10px;
+  transition: 500ms;
+
+}
+
+.itemInvalid {
+  background: rgb(125, 128, 129);  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #E4E5E6, #00416A);  /* Chrome 10-25, Safari 5.1-6 */
+  background: radial-gradient(#E4E5E6, rgb(125, 128, 129)); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  pointer-events: none;
+}
+
+.transparent {
+  opacity: .40;
+}
+
+
+.buttonContainer {
+  display: flex;
+  flex-flow: row wrap;
+  flex: 2;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(128, 128, 128, 0.623);
+  border-radius: 10px;
+}
+
+.buttonSelected {
+  background-color: rgba(128, 128, 128, 0.623);
+}
+
+.confirm-order {
+  width: 200px;
+  margin: 20px;
+}
+
+.confirm:hover {
+  color: white;
+  background-color: black;
+}
+
+/*---DrinkSelector---*/
+
+.drinksContainer {
+  font-family: "FuturaMediumBT", "Trebuchet MS", Arial, sans-serif;
+  color: black;
+  font-size: 24px;
+  background-color: rgba(180, 179, 170, 0.627);
+  border-radius: 25px;
+  width: 920px;
+  margin-bottom: 20px;
+}
+
+/*---BeanSelector---*/
+
+.beanContainer {
+  font-family: "FuturaMediumBT", "Trebuchet MS", Arial, sans-serif;
+  color: black;
+  font-size: 24px;
+  background-color: rgba(180, 179, 170, 0.627);
+  border-radius: 25px;
+  width: 450px;
+  margin-right: 10px;
+}
+
+/*---MilkSelector---*/
+
+.milkContainer {
+  font-family: "FuturaMediumBT", "Trebuchet MS", Arial, sans-serif;
+  color: black;
+  font-size: 24px;
+  background-color: rgba(180, 179, 170, 0.627);
+  border-radius: 25px;
+  width: 450px;
+  margin-left: 10px;
+}
+
+/*--PaymentScreen--*/
+
+.payment {
+  width: "980px";
+	text-align: center;
+	font-size: 48px;
+	align-items: center;
+  margin: 50px;
+  margin-top: 415px;
+  height: 600px;
+  border-radius: 50px;
+  padding-top: 75px;
+	background: radial-gradient(#E2E2E2, #727272);
+}
+
+.receipt {
+  border-radius: 100px;
+  font-family: "FuturaMediumBT", "Trebuchet MS", Arial, sans-serif;
+  opacity: .85;
+
+}
+
+.receipt-entry {
+  text-transform: capitalize;
+  color: black;
+  list-style: none;
+}
+
+.prepared {
+  font-family: "FuturaMediumBT", "Trebuchet MS", Arial, sans-serif;
+}
+
+.nameBox {
+  border-radius: 50px;
+  margin-bottom: 10px;
+  height: 50px;
+  width: 350px;
+  text-align: center;
+  font-size: 36px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.nameBox:focus {
+  outline: 0;
+}
+
+.nameBox-empty {
+  border: 2px red solid;
+}
+
+.printSelection {
+  margin: 10px;
+  background-color: #ccc;
+  border-radius: 3px;
+}
+
+.orderList {
+  list-style-type: none;
+}
+
+/*---Welcome---*/
+
+.welcome {
+  text-align: center;
+  margin-top: 200px;
+  border: 3px solid black;
+}
+.welcome h3 {
+  font-size: 64px;
+  
+}
+.welcome p {
+  font-size: 48px;
+}
+.welcome button {
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 10px;
+  font-size: 48px;
+}
