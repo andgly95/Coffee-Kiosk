@@ -45,6 +45,7 @@ body {
 .selectorContainer {
   display: flex;
   flex-flow: column nowrap;
+  justify-content: space-around;
   align-items: center;
   margin-left: 25px;
   margin-right: 25px;
@@ -72,6 +73,12 @@ body {
   flex-flow: column nowrap;
 }
 
+.constructedTop {
+ position: relative;
+ display: grid;
+ grid-template-columns: 30% 40% 30%;
+}
+
 .description {
   margin: 20px;
   font-size: 22px;
@@ -96,14 +103,16 @@ body {
   pointer-events: none;
 }
 
+.coffeeCup {
+  position: relative;
+}
 
 .milkOverlay {
-  position: absolute;
+  width: 100%;
+  position: relative;
+  margin: auto;
   background-image: url('./resources/milkoverlay.png');
   background-repeat: no-repeat;
-  height: 500px;
-  width: 500px;
-  left: 200px;
 }
 
 
@@ -161,6 +170,15 @@ blank {
 img {
   width: 100%
 }
+
+.cupImage {
+  width: 100%;
+  margin: auto;
+}
+
+.leftPad {width: 20%;}
+
+.rightPad {width: 20%;}
 
 .buttonContainer {
   display: flex;
@@ -324,9 +342,6 @@ img {
   .welcome button{
     font-size: 18px;
   }
-  .cupImage {
-    width: 30%;
-  }
 }
 
 
@@ -372,10 +387,9 @@ img {
   .welcome button{
     font-size: 18px;
   }
-  .cupImage {
-    width: 60%;
+  .milkSlider {
+    font-size: 14px;
   }
-  
 } 
 
 
@@ -389,9 +403,6 @@ img {
     width: 50%;
   }
   .selectorContainer {
-    width: 50%;
-  }
-  .cupImage {
     width: 50%;
   }
 }

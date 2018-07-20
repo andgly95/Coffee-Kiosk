@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import DrinkSelector from './components/drinkSelector';
 import BeanSelector from './components/beanSelector';
 import MilkSelector from './components/milkSelector';
-import ConstructedDrink from './components/constructedDrink';
+import ConstructedDrink from './components/constructedDrink.jsx';
 import ConfirmationScreen from './components/confirmationScreen';
 import ReactModal from 'react-modal';
 import axios from 'axios';
-import { StyleSheet, css } from 'aphrodite';
-
 
 require('./App.css');
 
@@ -167,7 +165,7 @@ export default class App extends Component {
 
 	fakeSwipe() {
 		this.setState({
-			name: "Name From Card",
+			name: '"Name From Card"',
 			showSplashScreen: false
 		})
 	}
@@ -246,6 +244,7 @@ export default class App extends Component {
 
 	render() {
 		return (
+
 			<div className="App">
 
 				<header className="logo"> Truebird Coffee </header>
@@ -271,15 +270,15 @@ export default class App extends Component {
 					className="welcome"
 				>
 					<h3>Welcome to Truebird</h3>
-					<p> *Insert Awesome Splash Screen Here*</p>
-					<button onClick={this.fakeSwipe.bind(this)}>Swipe Card</button>
+					<p> *Insert Awesome Splash Screen Here</p>
+					<button onClick={this.fakeSwipe.bind(this)}>Virtual Card Swipe</button>
 					<p>OR</p>
 					<button onClick={this.closeSplashScreen.bind(this)}>Browse</button>
 					<p>to begin</p>
 
 				</ReactModal>
 				<div className="container">
-				<div />
+					<div />
 					<ConstructedDrink
 						selection={this.state.selection}
 						options={this.state.options}

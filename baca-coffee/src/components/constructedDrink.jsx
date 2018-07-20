@@ -8,7 +8,7 @@ import emptyCup from '../resources/d_empty.png';
 const Handle = Slider.Handle;
 
 const handle = (props) => {
-    const { value, dragging, index, ...restProps } = props;
+    const { value, dragging, index } = props;
     return (
         <Tooltip
             prefixCls="rc-slider-tooltip"
@@ -17,10 +17,23 @@ const handle = (props) => {
             placement="top"
             key={index}
         >
-            <Handle value={value} {...restProps} />
+            <Handle value={value} />
         </Tooltip>
     );
 };
+
+const marks = {
+    1: '1',
+    2:'2',
+    3:'3',
+    4:'4',
+    5:'5',
+    6:'6',
+    7:'7',
+    8:'8',
+    9:'9',
+    10:'10'
+}
 
 const ConstructedDrink = ({ selection, options, submitOrder, changeMilkSlider, milkLevel, toggleMilk }) => {
 
@@ -40,9 +53,9 @@ const ConstructedDrink = ({ selection, options, submitOrder, changeMilkSlider, m
     let beanDescription = (beanChoice) ? (beanChoice.description) : "\n\n\n";
     let confirmButton = (beanChoice && (!drinkChoice.addMilk || milkChoice || selection.milk === 'optional')) ? (<div className="confirm" onClick={submitOrder}>Confirm</div>) : (<div className="confirm unconfirmed" >Confirm</div>);
 
-    let slider = (selection.drink === 1 && selection.milk !== 'disabled') ? (<div style={{ float: 'right', height: 300, marginRight: 100, marginTop: 100 }}>
-        <p>Max Milk</p><Slider min={0} max={10} style={{ marginLeft: 20 }} defaultValue={milkLevel} vertical={true} handle={handle} onChange={changeMilkSlider} /><p>No Milk</p>
-    </div>) : <div style={{ float: 'right', height: 300, marginRight: 100, marginTop: 100 }} />
+    let slider = (selection.drink === 1 && selection.milk !== 'disabled') ? (<div className="milkSlider" style={{ height: '75%'}}>
+        <p>Max Milk</p><Slider min={0} max={10} style={{ marginLeft: '50%' }} defaultValue={milkLevel} vertical={true} handle={handle} onChange={changeMilkSlider} /><p>No Milk</p>
+    </div>) : "" ;
 
     let milkOverlay = (selection.drink === 1 && selection.milk !== 'disabled') ? "milkOverlay" : "";
     let milkOpacity = milkLevel / 10;
@@ -51,9 +64,9 @@ const ConstructedDrink = ({ selection, options, submitOrder, changeMilkSlider, m
 
         <div className="constructed">
             <div className="constructedTop">
-                <div className="leftPad" /> <img className="cupImage" src={displayImage}  alt={drinkChoice.name} /> <div className="rightPad" />
-                <div className={milkOverlay} style={{ opacity: milkOpacity }} />
-                {slider}
+                <div /><div className="coffeeCup"><img className="cupImage" src={displayImage}  alt={drinkChoice.name} />
+                <div className={milkOverlay} style={{ opacity: milkOpacity }} /></div>
+                <div>{slider}</div>
             </div>
             <div className="constructedBottom">
                 <div className="description drink-desc">{drinkDescription}</div>
