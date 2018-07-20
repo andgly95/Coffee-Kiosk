@@ -29,10 +29,10 @@ const ConstructedDrink = ({ selection, options, submitOrder, changeMilkSlider, m
     let milkChoice = (selection.milk !== 'select' && selection.milk !== 'disabled') ? options.milk.find(milk => milk.id === selection.milk) : false;
 
     let displayImage = drinkChoice.image ? drinkChoice.image : emptyCup;
-    
+
     let milkText = (milkChoice) ? (milkChoice.name) : "Choose a milk";
     milkText = (selection.milk === 'disabled' || selection.drink === 'select') ? "" : milkText;
-    milkText = (selection.drink === 1 && selection.milk === "disabled")? (<div className="confirm" onClick={toggleMilk}>Add Milk</div>) : milkText;
+    milkText = (selection.drink === 1 && selection.milk === "disabled") ? (<div className="confirm" onClick={toggleMilk}>Add Milk</div>) : milkText;
     let beanText = (selection.drink !== 'select') ? "Choose a bean" : "";
     beanText = (beanChoice) ? ("You have selected " + beanChoice.name) : beanText;
 
@@ -40,18 +40,19 @@ const ConstructedDrink = ({ selection, options, submitOrder, changeMilkSlider, m
     let beanDescription = (beanChoice) ? (beanChoice.description) : "\n\n\n";
     let confirmButton = (beanChoice && (!drinkChoice.addMilk || milkChoice || selection.milk === 'optional')) ? (<div className="confirm" onClick={submitOrder}>Confirm</div>) : (<div className="confirm unconfirmed" >Confirm</div>);
 
-    let slider = (selection.drink === 1 && selection.milk !== 'disabled') ? (<div style={{ float: 'right', height: 300, marginRight: 100, marginTop: 100 }}>
-        <p>Max Milk</p><Slider min={0} max={10} style={{marginLeft: 20}} defaultValue={milkLevel} vertical={true} handle={handle} onChange={changeMilkSlider} /><p>No Milk</p>
-    </div>) : <div style={{ float: 'right', height: 300, marginRight: 100, marginTop: 100 }} /> ;
+    let slider = "";/*(selection.drink === 1 && selection.milk !== 'disabled') ? (<div style={{ float: 'right', height: 300, marginRight: 100, marginTop: 100 }}>
+        <p>Max Milk</p><Slider min={0} max={10} style={{ marginLeft: 20 }} defaultValue={milkLevel} vertical={true} handle={handle} onChange={changeMilkSlider} /><p>No Milk</p>
+    </div>) : <div style={{ float: 'right', height: 300, marginRight: 100, marginTop: 100 }} />;*/
 
-    let milkOverlay = (selection.drink === 1 && selection.milk !== 'disabled')? "milkOverlay" : "";
+    let milkOverlay = (selection.drink === 1 && selection.milk !== 'disabled') ? "milkOverlay" : "";
     let milkOpacity = milkLevel / 10;
 
     return (
+
         <div className="constructed">
             <div className="constructedTop">
-                <img className="cupImage" src={displayImage} width={500} height={500} alt={drinkChoice.name} />
-                <span className={milkOverlay} style={{opacity: milkOpacity}} />
+                <img className="cupImage" src={displayImage}  alt={drinkChoice.name} />
+                <span className={milkOverlay} style={{ opacity: milkOpacity }} />
                 {slider}
             </div>
             <div className="constructedBottom">
@@ -60,7 +61,6 @@ const ConstructedDrink = ({ selection, options, submitOrder, changeMilkSlider, m
                 <div className="description milk-desc">{milkText}<br /></div>
                 {confirmButton}
             </div>
-
         </div>
     );
 

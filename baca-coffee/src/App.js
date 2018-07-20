@@ -6,6 +6,8 @@ import ConstructedDrink from './components/constructedDrink';
 import ConfirmationScreen from './components/confirmationScreen';
 import ReactModal from 'react-modal';
 import axios from 'axios';
+import { StyleSheet, css } from 'aphrodite';
+
 
 require('./App.css');
 
@@ -159,8 +161,8 @@ export default class App extends Component {
 		});
 	}
 
-	closeSplashScreen(){
-		this.setState({showSplashScreen: false});
+	closeSplashScreen() {
+		this.setState({ showSplashScreen: false });
 	}
 
 	fakeSwipe() {
@@ -244,39 +246,40 @@ export default class App extends Component {
 
 	render() {
 		return (
-			<div className="container">
-				<div className="App">
-					<div className="logo"> Truebird Coffee </div>
+			<div className="App">
 
-					<ReactModal
-						isOpen={this.state.showPayment}
-						contentLabel="Payment Screen"
-						className="payment"
-					>
-						<ConfirmationScreen
-							selection={this.state.selection}
-							options={this.state.options}
-							name={this.state.name}
-							changeName={this.changeName.bind(this)}
-							closePayment={this.closePayment.bind(this)}
-							submitOrder={this.submitOrder.bind(this)}
-						/>
-					</ReactModal>
+				<header className="logo"> Truebird Coffee </header>
 
-					<ReactModal
-						isOpen={this.state.showSplashScreen}
-						contentLabel="Welcome Screen"
-						className="welcome"
-					>
-						<h3>Welcome to Truebird</h3>
-						<p> *Insert Awesome Splash Screen Here*</p>
-						<button onClick={this.fakeSwipe.bind(this)}>Swipe Card</button>
-						<p>OR</p>
-						<button onClick={this.closeSplashScreen.bind(this)}>Browse</button>
-						<p>to begin</p>
+				<ReactModal
+					isOpen={this.state.showPayment}
+					contentLabel="Payment Screen"
+					className="payment"
+				>
+					<ConfirmationScreen
+						selection={this.state.selection}
+						options={this.state.options}
+						name={this.state.name}
+						changeName={this.changeName.bind(this)}
+						closePayment={this.closePayment.bind(this)}
+						submitOrder={this.submitOrder.bind(this)}
+					/>
+				</ReactModal>
 
-					</ReactModal>
+				<ReactModal
+					isOpen={this.state.showSplashScreen}
+					contentLabel="Welcome Screen"
+					className="welcome"
+				>
+					<h3>Welcome to Truebird</h3>
+					<p> *Insert Awesome Splash Screen Here*</p>
+					<button onClick={this.fakeSwipe.bind(this)}>Swipe Card</button>
+					<p>OR</p>
+					<button onClick={this.closeSplashScreen.bind(this)}>Browse</button>
+					<p>to begin</p>
 
+				</ReactModal>
+				<div className="container">
+				<div />
 					<ConstructedDrink
 						selection={this.state.selection}
 						options={this.state.options}

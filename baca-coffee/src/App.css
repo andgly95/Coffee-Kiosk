@@ -1,27 +1,36 @@
+html {
+  height: 100%;
+}
+
 body {
-  background-image: url("./resources/coffee.jpg");
-  background-repeat: no-repeat;
+  /* background-image: url("./resources/coffee.jpg");
+  background-repeat: no-repeat; */
   /* overflow: hidden; */
   background-attachment: fixed;
+  background: linear-gradient(#6D4C41, #BCAAA4);
+  height: 100%;
 }
+
+* {
+  box-sizing: border-box;
+}
+
 
 /*----App.js---*/
 
 .App {
   text-align: center;
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: space-around;
+
   align-items: center;
-  padding-left: 100px;
-  padding-right: 100px;
-  height: 1920px;
+  height: 100%;
+  width: 100%;
   
 }
 
 .container {
-  width: 1080px;
-  height: 1920px;
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
 }
 
 .logo {
@@ -30,20 +39,17 @@ body {
   font-size: 100px;
   text-align: center;
   text-shadow: 2px 2px rgb(125, 195, 238);
-  padding-top: 25px;
-  position: fixed;
-  top: 75px;
+  padding: 25px;
 }
 
 .selectorContainer {
   display: flex;
-  /* flex: 4; */
   flex-flow: column nowrap;
   align-items: center;
+  margin-left: 25px;
+  margin-right: 25px;
   margin-top: 50px;
   margin-bottom: 50px;
-  position: fixed;
-  top: 1150px;
 }
 
 .bottomrow {
@@ -58,51 +64,21 @@ body {
   background-color: #ADA996A0;
   background: radial-gradient(#EAEAEA 25%, #ADA996C0 90%); 
   border-radius: 50px;
-  width: 840px;
-  height: 840px;
-  margin: auto;
+  margin: 25px;
   padding: 25px;
   padding-top: 0px;
-  position: fixed;
-  top: 260px;
+  text-align: center;
   display: flex;
   flex-flow: column nowrap;
-}
-
-constructedTop {
-  height: 600px;
-  margin-bottom: 200px;
-}
-
-constructedBottom {
-  top: 600px;
-  bottom: 0;
 }
 
 .description {
   margin: 20px;
   font-size: 22px;
-  height: 60px;
-}
-
-.bean-desc {
-  height: 90px;
-}
-
-.drink-desc {
-  height: 60px;
-  margin-top: 100px;
-}
-
-.milk-desc {
-  height: 30px;
 }
 
 .confirm {
   padding: 10px;
-  margin: 10px;
-  margin-bottom: 30px;
-  
   border: solid 3px black;
   border-radius: 10px;
   font-size: 24px;
@@ -120,10 +96,6 @@ constructedBottom {
   pointer-events: none;
 }
 
-.cupImage {
-  position: absolute;
-  left: 200px;
-}
 
 .milkOverlay {
   position: absolute;
@@ -143,14 +115,20 @@ blank {
 /*---ItemSelection---*/
 
 .item {
-  margin: 10px;
-  width: 200px;
-  height: 200px;
+  margin: 1%;
   background: #ADA996;  /* fallback for old browsers */
   background: radial-gradient(#EAEAEA, #DBDBDB, #F2F2F2 25%, #ADA996 ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   border-radius: 10px;
   box-sizing: border-box;
   transition: 500ms;
+}
+
+.item-Drink {
+  width: 22%;
+}
+
+.item-Add {
+  width: 42%;
 }
 
 .item-Choose {
@@ -180,6 +158,9 @@ blank {
   opacity: .40;
 }
 
+img {
+  width: 100%
+}
 
 .buttonContainer {
   display: flex;
@@ -205,52 +186,14 @@ blank {
   background-color: black;
 }
 
-/*---DrinkSelector---*/
-
-.drinksContainer {
-  font-family: "FuturaMediumBT", "Trebuchet MS", Arial, sans-serif;
-  color: black;
-  font-size: 24px;
-  background-color: rgba(180, 179, 170, 0.627);
-  border-radius: 25px;
-  width: 920px;
-  margin-bottom: 20px;
-}
-
-/*---BeanSelector---*/
-
-.beanContainer {
-  font-family: "FuturaMediumBT", "Trebuchet MS", Arial, sans-serif;
-  color: black;
-  font-size: 24px;
-  background-color: rgba(180, 179, 170, 0.627);
-  border-radius: 25px;
-  width: 450px;
-  margin-right: 10px;
-}
-
-/*---MilkSelector---*/
-
-.milkContainer {
-  font-family: "FuturaMediumBT", "Trebuchet MS", Arial, sans-serif;
-  color: black;
-  font-size: 24px;
-  background-color: rgba(180, 179, 170, 0.627);
-  border-radius: 25px;
-  width: 450px;
-  margin-left: 10px;
-}
 
 /*--PaymentScreen--*/
 
 .payment {
-  width: "980px";
 	text-align: center;
 	font-size: 48px;
 	align-items: center;
   margin: 50px;
-  margin-top: 415px;
-  height: 600px;
   border-radius: 50px;
   padding-top: 75px;
 	background: radial-gradient(#E2E2E2, #727272);
@@ -260,7 +203,7 @@ blank {
   border-radius: 100px;
   font-family: "FuturaMediumBT", "Trebuchet MS", Arial, sans-serif;
   opacity: .85;
-
+  padding: 0px;
 }
 
 .receipt-entry {
@@ -305,20 +248,157 @@ blank {
 
 .welcome {
   text-align: center;
-  margin-top: 200px;
   border: 3px solid black;
+  height: 100%;
 }
 .welcome h3 {
-  font-size: 64px;
+  font-size: 48px;
   
 }
 .welcome p {
-  font-size: 48px;
+  font-size: 36px;
 }
 .welcome button {
   padding: 10px;
   padding-left: 20px;
   padding-right: 20px;
   border-radius: 10px;
-  font-size: 48px;
+  font-size: 36px;
+}
+
+/*----GRID----*/
+
+/* For mobile phones: */
+[class*="col-"] {
+  width: 100%;
+}
+
+
+
+
+@media only screen and (max-width: 1024px) {
+  /* For ipad: */
+  .container {
+    display: flex;
+    flex-flow: column nowrap;
+  }
+  .logo {
+    font-size: 60px;
+  }
+  .description {
+    font-size: 18px;
+  }
+  .confirm {
+    font-size: 12px;
+  }
+
+  
+  .description {
+    font-size: 12px;
+  }
+  
+  .item {
+    margin: 1%;
+  }
+  .item-Drink {
+    width: 23%;
+  }
+  .item-Add {
+    width: 46%;
+  }
+  .constructed {
+    margin-top: 0px;
+  }
+  .selectorContainer {
+    margin-top: 0px;
+  }
+  .payment * {
+    font-size: 12px;
+  }
+  .payment .nameBox {
+    width: 150px;
+  }
+  .welcome p{
+    font-size: 18px;
+  }
+  .welcome button{
+    font-size: 18px;
+  }
+  .cupImage {
+    width: 30%;
+  }
+}
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 720px) {
+  .container {
+    display: flex;
+    flex-flow: column nowrap;
+  }
+  .logo {
+    font-size: 30px;
+  }
+  .description {
+    font-size: 12px;
+  }
+  .confirm {
+    font-size: 12px;
+  }
+  .item {
+    margin: 2%;
+  }
+  .item-Drink {
+    width: 45%;
+  }
+  .item-Add {
+    width: 90%;
+  }
+  .constructed {
+    margin-top: 0px;
+  }
+  .selectorContainer {
+    margin-top: 0px;
+  }
+  .payment * {
+    font-size: 12px;
+  }
+  .payment .nameBox {
+    width: 150px;
+  }
+  .welcome p{
+    font-size: 14px;
+  }
+  .welcome button{
+    font-size: 18px;
+  }
+  .cupImage {
+    width: 60%;
+  }
+  
+} 
+
+
+@media only screen and (orientation: landscape){
+  .container {
+    display: flex;
+    flex-flow: row nowrap;
+    align-content: center;
+  }
+  .constructed {
+    width: 50%;
+  }
+  .selectorContainer {
+    width: 50%;
+  }
+  .cupImage {
+    width: 50%;
+  }
+}
+
+
+[class*="col-"] {
+  float: left;
+  padding: 15px;
+  border: 1px solid red;
 }
