@@ -1,13 +1,14 @@
 html {
   height: 100%;
+
+  /* overflow: hidden; */
+  background: linear-gradient(#6D4C41, #BCAAA4);
+  background-repeat: no-repeat;
 }
 
 body {
-  /* background-image: url("./resources/coffee.jpg");
-  background-repeat: no-repeat; */
-  /* overflow: hidden; */
-  background-attachment: fixed;
-  background: linear-gradient(#6D4C41, #BCAAA4);
+  /* background-image: url("./resources/coffee.jpg");*/
+ 
   height: 100%;
 }
 
@@ -23,14 +24,15 @@ body {
 
   align-items: center;
   height: 100%;
-  width: 100%;
+  display: grid;
+  grid-template-rows: 10% 90%;
   
 }
 
 .container {
   width: 100%;
-  display: flex;
-  flex-flow: column nowrap;
+  display: grid;
+  grid-template-rows: 50% 50%;
 }
 
 .logo {
@@ -69,8 +71,8 @@ body {
   padding: 25px;
   padding-top: 0px;
   text-align: center;
-  display: flex;
-  flex-flow: column nowrap;
+  display: grid;
+  grid-template-rows: 50% 50%;
 }
 
 .constructedTop {
@@ -350,6 +352,7 @@ img {
   .container {
     display: flex;
     flex-flow: column nowrap;
+    zoom: 40%;
   }
   .logo {
     font-size: 30px;
@@ -357,17 +360,23 @@ img {
   .description {
     font-size: 12px;
   }
+  .drink-desc {
+    display: none;
+  }
+  #descText {
+    display: none;
+  }
   .confirm {
     font-size: 12px;
   }
   .item {
-    margin: 2%;
+    margin: 1%;
   }
   .item-Drink {
-    width: 45%;
+    width: 22%;
   }
   .item-Add {
-    width: 90%;
+    width: 45%;
   }
   .constructed {
     margin-top: 0px;

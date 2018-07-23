@@ -278,7 +278,7 @@ export default class App extends Component {
 
 				</ReactModal>
 				<div className="container">
-					<div />
+					
 					<ConstructedDrink
 						selection={this.state.selection}
 						options={this.state.options}

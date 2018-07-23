@@ -8,7 +8,7 @@ import emptyCup from '../resources/d_empty.png';
 const Handle = Slider.Handle;
 
 const handle = (props) => {
-    const { value, dragging, index } = props;
+    const { value, dragging, index, ...restprops } = props;
     return (
         <Tooltip
             prefixCls="rc-slider-tooltip"
@@ -17,7 +17,7 @@ const handle = (props) => {
             placement="top"
             key={index}
         >
-            <Handle value={value} />
+            <Handle value={value}{...restprops} />
         </Tooltip>
     );
 };
@@ -45,7 +45,7 @@ const ConstructedDrink = ({ selection, options, submitOrder, changeMilkSlider, m
 
     let milkText = (milkChoice) ? (milkChoice.name) : "Choose a milk";
     milkText = (selection.milk === 'disabled' || selection.drink === 'select') ? "" : milkText;
-    milkText = (selection.drink === 1 && selection.milk === "disabled") ? (<div className="confirm" onClick={toggleMilk}>Add Milk</div>) : milkText;
+    milkText = (selection.drink === 1 && selection.milk === "disabled") ? (<div className="confirm" onClick={toggleMilk}>Add Milk</div>) : <span className="description">{milkText}</span>;
     let beanText = (selection.drink !== 'select') ? "Choose a bean" : "";
     beanText = (beanChoice) ? ("You have selected " + beanChoice.name) : beanText;
 
@@ -70,8 +70,8 @@ const ConstructedDrink = ({ selection, options, submitOrder, changeMilkSlider, m
             </div>
             <div className="constructedBottom">
                 <div className="description drink-desc">{drinkDescription}</div>
-                <div className="description bean-desc"><b>{beanText}</b><br />{beanDescription}</div>
-                <div className="description milk-desc">{milkText}<br /></div>
+                <div className="description bean-desc"><b>{beanText}</b><span id="descText"><br />{beanDescription}</span></div>
+                <div className=" milk-desc">{milkText}<br /></div>
                 {confirmButton}
             </div>
         </div>

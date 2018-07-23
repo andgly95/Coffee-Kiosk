@@ -32,15 +32,16 @@ const styles = StyleSheet.create({
         fontFamily: "FuturaMediumBT, Trebuchet MS, Arial, sans-serif",
         color: "black",
         fontSize: 24,
-        '@media (max-width: 720px)': {
-            fontSize: 14
-        },
         '@media (max-width: 1024px)': {
             fontSize: 14
         },
         '@media (orientation: landscape)': {
             fontSize: 18
         },
+        '@media (max-width: 720px)': {
+            fontSize: 10
+        },
+        
         backgroundColor: "rgba(180, 179, 170, 0.627)",
         borderRadius: 25,
         width: "100%",
