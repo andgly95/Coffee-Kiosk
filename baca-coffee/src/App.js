@@ -18,7 +18,6 @@ export default class App extends Component {
 				drinks: [
 					{
 						name: "espresso",
-						// description: "Made by forcing very hot water under high pressure through finely ground fresh coffee, espresso is the foundation for many other coffee drinks",
 						status: 1,
 						addMilk: false,
 						image: require('./resources/d_Espresso.png'),
@@ -26,7 +25,6 @@ export default class App extends Component {
 					},
 					{
 						name: "americano",
-						// description: "The term 'Americano' was coined during World War II, when American soldiers diluted espresso with hot water to satisfy their desire for more sips in a cup",
 						status: 1,
 						addMilk: false,
 						image: require('./resources/d_Americano.png'),
@@ -34,7 +32,6 @@ export default class App extends Component {
 					},
 					{
 						name: "cappuccino",
-						// description: "Cappuccino is an exquisite balance of flavors between the bitterness of espresso, the sweetness of hot milk and the sticky consistency of steamed foam",
 						status: 1,
 						addMilk: true,
 						image: require('./resources/d_Cappuccino.png'),
@@ -42,7 +39,6 @@ export default class App extends Component {
 					},
 					{
 						name: "latte",
-						// description: 'Italian for "coffee with milk", the Caffe Latte is a classical combination of one shot of espresso and steamed milk with a light layer of sweet foam',
 						status: 1,
 						addMilk: true,
 						image: require('./resources/d_Latte.png'),
@@ -52,14 +48,12 @@ export default class App extends Component {
 				beans: [
 					{
 						name: "Stumptown Hair Bender",
-						//description: "A cup of Hair Bender has clarity and complexity; Indonesia’s rich textures are balanced by the classic flavors of Latin America and Africa. ",
 						status: 1,
 						image: require('./resources/b_Stumptown_Hair-Bender.png'),
 						id: 4
 					},
 					{
 						name: "Sey Ivan Molano Colombia",
-						//description: 'Ivan comes from many generations of coffee growers. His farm rests in the clouds at 2,070 masl, making it one of the highest farms in Colombia',
 						status: 1,
 						image: require('./resources/b_Sey_Ivan-Molano-Colombia.png'),
 						id: 5
@@ -266,13 +260,13 @@ export default class App extends Component {
 						contentLabel="Welcome Screen"
 						className={css(styles.welcome)}
 					>
-						<div className="welcome">
-							<h3>Welcome to Truebird</h3>
-							<p> *Insert Awesome Splash Screen Here</p>
+						<div>
+							<div className="welcometext"><b>Welcome to Truebird</b></div>
+							<div className="welcometext">*Insert Awesome Splash Screen Here</div>
 							<button className={css(styles.welcomeButton)} onClick={this.fakeSwipe.bind(this)}>Virtual Card Swipe</button>
-							<p>OR</p>
+							<div className="welcometext">OR</div>
 							<button className={css(styles.welcomeButton)} onClick={this.closeSplashScreen.bind(this)}>Browse</button>
-							<p>to begin</p>
+							<div className="welcometext">to begin</div>
 						</div>
 
 					</ReactModal>
@@ -347,13 +341,23 @@ const styles = StyleSheet.create({
 		border: '3px solid black',
 		borderRadius: '2.5vw',
 		backgroundColor: '#8D6E63',
-		fontSize: '5vw'
+		'@media (orientation: portrait)': {
+			fontSize: '5vw'
+		},
+		'@media (orientation: landscape)': {
+			fontSize: '2.5vw'
+		}
 	},
 	welcomeButton: {
 		padding: '3%',
 		borderRadius: '2.5vw',
-		fontSize: '2.5vw'
-	  },
+		'@media (orientation: portrait)': {
+			fontSize: '4vw'
+		},
+		'@media (orientation: landscape)': {
+			fontSize: '2vw'
+		}
+	},
 	selectorContainer: {
 		display: 'flex',
 		flexFlow: 'column nowrap',
