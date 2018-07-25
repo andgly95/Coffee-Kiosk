@@ -4,11 +4,12 @@ import Tooltip from 'rc-tooltip';
 import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
 import emptyCup from '../resources/d_empty.png';
+import { StyleSheet, css } from 'aphrodite';
 
 const Handle = Slider.Handle;
 
 const handle = (props) => {
-    const { value, dragging, index, ...restProps } = props;
+    const { value, dragging, index } = props;
     return (
         <Tooltip
             prefixCls="rc-slider-tooltip"
@@ -17,10 +18,23 @@ const handle = (props) => {
             placement="top"
             key={index}
         >
-            <Handle value={value} {...restProps} />
+            <Handle value={value} />
         </Tooltip>
     );
 };
+
+const marks = {
+    1: ' ',
+    2: '1',
+    3: ' ',
+    4: '2',
+    5: ' ',
+    6: '3',
+    7: ' ',
+    8: '4',
+    9: ' ',
+    10: '5'
+}
 
 const ConstructedDrink = ({ selection, options, submitOrder, changeMilkSlider, milkLevel, toggleMilk }) => {
 
@@ -32,38 +46,105 @@ const ConstructedDrink = ({ selection, options, submitOrder, changeMilkSlider, m
 
     let milkText = (milkChoice) ? (milkChoice.name) : "Choose a milk";
     milkText = (selection.milk === 'disabled' || selection.drink === 'select') ? "" : milkText;
-    milkText = (selection.drink === 1 && selection.milk === "disabled") ? (<div className="confirm" onClick={toggleMilk}>Add Milk</div>) : milkText;
-    let beanText = (selection.drink !== 'select') ? "Choose a bean" : "";
+    milkText = (selection.drink === 1 && selection.milk === "disabled") ? (<span onClick={toggleMilk}>Add Milk</span>) : milkText;
+    let beanText = (selection.drink !== 'select') ? "Choose a bean" : 'Choose a drink below to get started';
     beanText = (beanChoice) ? ("You have selected " + beanChoice.name) : beanText;
 
-    let drinkDescription = drinkChoice.description ? drinkChoice.description : "Choose a drink below to get started";
     let beanDescription = (beanChoice) ? (beanChoice.description) : "\n\n\n";
     let confirmButton = (beanChoice && (!drinkChoice.addMilk || milkChoice || selection.milk === 'optional')) ? (<div className="confirm" onClick={submitOrder}>Confirm</div>) : (<div className="confirm unconfirmed" >Confirm</div>);
 
-    let slider = (selection.drink === 1 && selection.milk !== 'disabled') ? (<div style={{ float: 'right', height: 300, marginRight: 100, marginTop: 100 }}>
-        <p>Max Milk</p><Slider min={0} max={10} style={{ marginLeft: 20 }} defaultValue={milkLevel} vertical={true} handle={handle} onChange={changeMilkSlider} /><p>No Milk</p>
-    </div>) : <div style={{ float: 'right', height: 300, marginRight: 100, marginTop: 100 }} />
+    let slider = (selection.drink === 1 && selection.milk !== 'disabled') ? (<div style={{ float: 'right', height: '50%', marginRight: '50%', marginTop: '50%' }}>
+        <p className={css(styles.milkSliderText)}>Max Milk</p><Slider min={0} max={10} defaultValue={milkLevel} vertical={true} marks={marks} handle={handle} onChange={changeMilkSlider} /><p className={css(styles.milkSliderText)}>No Milk</p>
+    </div>) : '';
 
-    let milkOverlay = (selection.drink === 1 && selection.milk !== 'disabled') ? "milkOverlay" : "";
+    let milkOverlay = (selection.drink === 1 && selection.milk !== 'disabled') ? css(styles.milkOverlay) : "";
     let milkOpacity = milkLevel / 10;
+    let milkOverlayUrl =  (milkOverlay)? require('../resources/milkoverlay.png') : '';
 
     return (
+        <div className={css(styles.constructed)}>
+            <div className={css(styles.constructedTop)}>
+                <div className="leftCup" />
+                <div className="middleCup"><img className={css(styles.cupImage)} src={displayImage} alt={drinkChoice.name} />
+                    <div className={milkOverlay} style={{ opacity: milkOpacity }} ><img className={css(styles.overlayImg)} src={milkOverlayUrl} /></div></div>
+                <div className='rightCup'>
 
-        <div className="constructed">
-            <div className="constructedTop">
-                <div className="leftPad" /> <img className="cupImage" src={displayImage}  alt={drinkChoice.name} /> <div className="rightPad" />
-                <div className={milkOverlay} style={{ opacity: milkOpacity }} />
-                {slider}
+                    {slider} </div>
             </div>
             <div className="constructedBottom">
-                <div className="description drink-desc">{drinkDescription}</div>
-                <div className="description bean-desc"><b>{beanText}</b><br />{beanDescription}</div>
-                <div className="description milk-desc">{milkText}<br /></div>
+                <div className={css(styles.description)}>{beanText}<br />{beanDescription}</div>
+                <div className={css(styles.description)}>{milkText}<br /></div>
                 {confirmButton}
             </div>
+
         </div>
     );
 
 }
+
+const styles = StyleSheet.create({
+    constructed: {
+        backgroundColor: '#ADA996A0',
+        background: 'radial-gradient(#EAEAEA 25%, #ADA996C0 90%)',
+        borderRadius: 50,
+        padding: 25,
+        paddingTop: 0,
+        display: 'flex',
+        flexFlow: 'column nowrap',
+        '@media (orientation: portrait)': {
+            width: '80%'
+        },
+        '@media (orientation: landscape)': {
+            width: '80%'
+        }
+    },
+    constructedTop: {
+        display: 'grid',
+        gridTemplateColumns: ' 20% 60% 20%'
+    },
+    description: {
+        fontFamily: '"FuturaMediumBT", "Trebuchet MS", Arial, sans-serif',
+        margin: '2%',
+        '@media (orientation: portrait)': {
+            fontSize: '2.5vw',
+            margin: '5%'
+        },
+        '@media (orientation: landscape)': {
+            fontSize: '1.25vw',
+            margin: '5%'
+        },
+
+    },
+    milkSliderText: {
+        '@media (orientation: portrait)': {
+            fontSize: '1vw',
+        },
+        '@media (orientation: landscape)': {
+            fontSize: '.5vw',
+        }
+    },
+    milkOverlay: {
+        position: 'absolute',
+        width: '100%',
+        top: '0'
+    },
+    overlayImg: {
+        position: 'relative',
+        width: '80%',
+    },
+    milkImage: {
+        position: 'absolute',
+        width: '80%'
+    },
+    cupImage: {
+        position: 'relative',
+        width: '80%',
+    }
+
+
+      
+      
+  
+})
 
 export default ConstructedDrink;

@@ -12,7 +12,7 @@ const DrinkSelector = ({ drinkSelection, drinks, changeDrink }) => {
 
     let drinkButtons = drinks.map(option => {
         return (
-            <ItemSelection option={option} selection={drinkSelection} key={option.id} type="drink" onSelect={changeDrink} />
+            <ItemSelection option={option} selection={drinkSelection} key={option.id} type='drink' onSelect={changeDrink} />
         )
     });
     return (
@@ -27,31 +27,26 @@ const DrinkSelector = ({ drinkSelection, drinks, changeDrink }) => {
 
 }
 
-const styles = StyleSheet.create({ 
-    drinksContainer: {
-        fontFamily: "FuturaMediumBT, Trebuchet MS, Arial, sans-serif",
-        color: "black",
-        fontSize: 24,
-        '@media (max-width: 1024px)': {
-            fontSize: 14
-        },
-        '@media (orientation: landscape)': {
-            fontSize: 18
-        },
-        '@media (max-width: 720px)': {
-            fontSize: 10
-        },
-        
-        backgroundColor: "rgba(180, 179, 170, 0.627)",
-        borderRadius: 25,
-        width: "100%",
-        marginBottom: 20
-    }
-    
+const styles = StyleSheet.create({
+ drinksContainer: {
+    fontFamily: '"FuturaMediumBT", "Trebuchet MS", Arial, sans-serif',
+    color: 'black',
+    backgroundColor: 'rgba(180, 179, 170, 0.627)',
+    borderRadius: 25,
+    marginBottom: '2%',
+    '@media (orientation: portrait)': {
+        width: '90%',
+        fontSize: '2.5vw'
+    },
+    '@media (orientation: landscape)': {
+        width: '90%',
+        fontSize: '1.25vw'
+    }    
+  }
 })
 
 DrinkSelector.propTypes = {
-    drinkSelection: PropTypes.oneOfType([
+    selection: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number
     ]),

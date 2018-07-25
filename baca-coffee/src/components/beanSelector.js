@@ -4,7 +4,6 @@ import ItemSelection from './itemSelection';
 import { StyleSheet, css } from 'aphrodite';
 
 
-
 const BeanSelector = ({ beanSelection, beans, changeBean }) => {
 
     let selected = "buttonContainer";
@@ -12,11 +11,11 @@ const BeanSelector = ({ beanSelection, beans, changeBean }) => {
 
     let beanButtons = beans.map(option => {
         return (
-            <ItemSelection option={option} selection={beanSelection} key={option.id} type="add" onSelect={changeBean} />
+            <ItemSelection option={option} selection={beanSelection} key={option.id} type='bean' onSelect={changeBean} />
         )
     })
     return (
-        <div className={css(styles.beanContainer)}>
+        <div className={css(styles.beansContainer)}>
             <h3>Beans</h3>
             <div className={selected}>
                 {beanButtons}
@@ -26,26 +25,24 @@ const BeanSelector = ({ beanSelection, beans, changeBean }) => {
     );
 }
 
-const styles = StyleSheet.create({ 
-    beanContainer: {
-        fontFamily: "FuturaMediumBT, Trebuchet MS, Arial, sans-serif",
-        color: "black",
-        fontSize: 24,
-        '@media (max-width: 1024px)': {
-            fontSize: 14
+const styles = StyleSheet.create({
+    beansContainer: {
+        fontFamily: '"FuturaMediumBT", "Trebuchet MS", Arial, sans-serif',
+        color: 'black',
+        fontSize: 10,
+        backgroundColor: 'rgba(180, 179, 170, 0.627)',
+        borderRadius: 25,
+        margin: 10,
+
+        '@media (orientation: portrait)': {
+            width: '44%',
+            fontSize: '2.5vw'
         },
         '@media (orientation: landscape)': {
-            fontSize: 18
-        },
-        '@media (max-width: 720px)': {
-            fontSize: 10
-        },
-        backgroundColor: "rgba(180, 179, 170, 0.627)",
-        borderRadius: 25,
-        width: '50%',
-        marginRight: 10
+            width: '45%',
+            fontSize: '1.25vw'
+        }
     }
-    
 })
 
 BeanSelector.propTypes = {

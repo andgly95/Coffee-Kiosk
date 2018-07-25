@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import DrinkSelector from './components/drinkSelector';
 import BeanSelector from './components/beanSelector';
 import MilkSelector from './components/milkSelector';
-import ConstructedDrink from './components/constructedDrink.jsx';
+import ConstructedDrink from './components/constructedDrink';
 import ConfirmationScreen from './components/confirmationScreen';
+import { StyleSheet, css } from 'aphrodite';
 import ReactModal from 'react-modal';
 import axios from 'axios';
 
@@ -18,7 +19,6 @@ export default class App extends Component {
 					{
 						name: "espresso",
 						// description: "Made by forcing very hot water under high pressure through finely ground fresh coffee, espresso is the foundation for many other coffee drinks",
-						description: "Espresso ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
 						status: 1,
 						addMilk: false,
 						image: require('./resources/d_Espresso.png'),
@@ -27,7 +27,6 @@ export default class App extends Component {
 					{
 						name: "americano",
 						// description: "The term 'Americano' was coined during World War II, when American soldiers diluted espresso with hot water to satisfy their desire for more sips in a cup",
-						description: "The term 'Americano' enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
 						status: 1,
 						addMilk: false,
 						image: require('./resources/d_Americano.png'),
@@ -36,7 +35,6 @@ export default class App extends Component {
 					{
 						name: "cappuccino",
 						// description: "Cappuccino is an exquisite balance of flavors between the bitterness of espresso, the sweetness of hot milk and the sticky consistency of steamed foam",
-						description: "Cappuccino  aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. ",
 						status: 1,
 						addMilk: true,
 						image: require('./resources/d_Cappuccino.png'),
@@ -45,7 +43,6 @@ export default class App extends Component {
 					{
 						name: "latte",
 						// description: 'Italian for "coffee with milk", the Caffe Latte is a classical combination of one shot of espresso and steamed milk with a light layer of sweet foam',
-						description: "Italian for 'coffee with milk', the Caffe Latte sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 						status: 1,
 						addMilk: true,
 						image: require('./resources/d_Latte.png'),
@@ -56,7 +53,6 @@ export default class App extends Component {
 					{
 						name: "Stumptown Hair Bender",
 						//description: "A cup of Hair Bender has clarity and complexity; Indonesia’s rich textures are balanced by the classic flavors of Latin America and Africa. ",
-						description: "Stumptown's Hair Bender ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.",
 						status: 1,
 						image: require('./resources/b_Stumptown_Hair-Bender.png'),
 						id: 4
@@ -64,7 +60,6 @@ export default class App extends Component {
 					{
 						name: "Sey Ivan Molano Colombia",
 						//description: 'Ivan comes from many generations of coffee growers. His farm rests in the clouds at 2,070 masl, making it one of the highest farms in Colombia',
-						description: "Ivan Molano enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem cillum dolore.",
 						status: 1,
 						image: require('./resources/b_Sey_Ivan-Molano-Colombia.png'),
 						id: 5
@@ -244,41 +239,44 @@ export default class App extends Component {
 
 	render() {
 		return (
+			<div className={css(styles.container)}>
+				<div className={css(styles.logo)}>
+					<img src={require('./resources/logoWhite.png')} width='100%' />
+				</div>
+				<div className={css(styles.App)}>
 
-			<div className="App">
 
-				<header className="logo"> Truebird Coffee </header>
+					<ReactModal
+						isOpen={this.state.showPayment}
+						contentLabel="Payment Screen"
+						className="payment"
+					>
+						<ConfirmationScreen
+							selection={this.state.selection}
+							options={this.state.options}
+							name={this.state.name}
+							changeName={this.changeName.bind(this)}
+							closePayment={this.closePayment.bind(this)}
+							submitOrder={this.submitOrder.bind(this)}
+						/>
+					</ReactModal>
 
-				<ReactModal
-					isOpen={this.state.showPayment}
-					contentLabel="Payment Screen"
-					className="payment"
-				>
-					<ConfirmationScreen
-						selection={this.state.selection}
-						options={this.state.options}
-						name={this.state.name}
-						changeName={this.changeName.bind(this)}
-						closePayment={this.closePayment.bind(this)}
-						submitOrder={this.submitOrder.bind(this)}
-					/>
-				</ReactModal>
+					<ReactModal
+						isOpen={this.state.showSplashScreen}
+						contentLabel="Welcome Screen"
+						className={css(styles.welcome)}
+					>
+						<div className="welcome">
+							<h3>Welcome to Truebird</h3>
+							<p> *Insert Awesome Splash Screen Here</p>
+							<button className={css(styles.welcomeButton)} onClick={this.fakeSwipe.bind(this)}>Virtual Card Swipe</button>
+							<p>OR</p>
+							<button className={css(styles.welcomeButton)} onClick={this.closeSplashScreen.bind(this)}>Browse</button>
+							<p>to begin</p>
+						</div>
 
-				<ReactModal
-					isOpen={this.state.showSplashScreen}
-					contentLabel="Welcome Screen"
-					className="welcome"
-				>
-					<h3>Welcome to Truebird</h3>
-					<p> *Insert Awesome Splash Screen Here</p>
-					<button onClick={this.fakeSwipe.bind(this)}>Virtual Card Swipe</button>
-					<p>OR</p>
-					<button onClick={this.closeSplashScreen.bind(this)}>Browse</button>
-					<p>to begin</p>
+					</ReactModal>
 
-				</ReactModal>
-				<div className="container">
-					
 					<ConstructedDrink
 						selection={this.state.selection}
 						options={this.state.options}
@@ -287,9 +285,9 @@ export default class App extends Component {
 						milkLevel={this.state.milkLevel}
 						toggleMilk={this.toggleMilk.bind(this)}
 					/>
-					<div className="selectorContainer">
+					<div className={css(styles.selectorContainer)}>
 						<DrinkSelector drinkSelection={this.state.selection.drink} drinks={this.state.options.drinks} changeDrink={this.changeDrink.bind(this)} />
-						<div className='bottomrow'>
+						<div className={css(styles.bottomRow)}>
 							<BeanSelector beanSelection={this.state.selection.bean} beans={this.state.options.beans} changeBean={this.changeBean.bind(this)} />
 							<MilkSelector milkSelection={this.state.selection.milk} milk={this.state.options.milk} changeMilk={this.changeMilk.bind(this)} />
 						</div>
@@ -299,3 +297,73 @@ export default class App extends Component {
 		);
 	}
 }
+const styles = StyleSheet.create({
+	container: {
+		alignItems: 'center',
+		display: 'grid',
+		gridTemplateRows: '10% 90%',
+		justifyItems: 'center',
+		marginTop: '5%',
+		paddingLeft: '5%',
+		paddingRight: '5%'
+	},
+	App: {
+		textAlign: 'center',
+		justifyItems: 'center',
+		alignItems: 'center',
+		'@media (orientation: portrait)': {
+			flexFlow: 'column nowrap',
+			display: 'flex',
+		},
+		'@media (orientation: landscape)': {
+			display: 'grid',
+			gridTemplateColumns: '50% 50%',
+		}
+	},
+	logo: {
+		paddingTop: '5%',
+		paddingBottom: '5%',
+		textAlign: 'center',
+		backgroundImage: require('./resources/logoWhite.png'),
+		'@media (max-width: 1024px)': {
+			width: '40%',
+			paddingTop: '3%',
+			paddingBottom: '3%'
+		},
+		'@media (max-width: 600px)': {
+			width: '80%'
+		},
+		'@media (orientation: landscape)': {
+
+			width: '40%',
+			padding: '2%'
+		}
+	},
+
+	welcome: {
+		textAlign: 'center',
+		margin: '10%',
+		marginTop: '10%',
+		border: '3px solid black',
+		borderRadius: '2.5vw',
+		backgroundColor: '#8D6E63',
+		fontSize: '5vw'
+	},
+	welcomeButton: {
+		padding: '3%',
+		borderRadius: '2.5vw',
+		fontSize: '2.5vw'
+	  },
+	selectorContainer: {
+		display: 'flex',
+		flexFlow: 'column nowrap',
+		alignItems: 'center',
+		marginTop: '5%',
+		marginBottom: '5%'
+	},
+	bottomRow: {
+		display: 'flex',
+  		flexDirection: 'row',
+  		justifyContent: 'center'
+	}
+})
