@@ -235,7 +235,7 @@ export default class App extends Component {
 		return (
 			<div className={css(styles.container)}>
 				<div className={css(styles.logo)}>
-					<img src={require('./resources/logoWhite.png')} width='100%' />
+					<img src={require('./resources/logoWhite.png')} width='75%' />
 				</div>
 				<div className={css(styles.App)}>
 
@@ -295,13 +295,14 @@ const styles = StyleSheet.create({
 	container: {
 		alignItems: 'center',
 		display: 'grid',
-		gridTemplateRows: '10% 90%',
+		gridTemplateRows: '25% 75%',
 		justifyItems: 'center',
 		marginTop: '5%',
 		paddingLeft: '5%',
 		paddingRight: '5%'
 	},
 	App: {
+		width: '100%',
 		textAlign: 'center',
 		justifyItems: 'center',
 		alignItems: 'center',
@@ -318,17 +319,16 @@ const styles = StyleSheet.create({
 		paddingTop: '5%',
 		paddingBottom: '5%',
 		textAlign: 'center',
-		backgroundImage: require('./resources/logoWhite.png'),
 		'@media (max-width: 1024px)': {
 			width: '40%',
 			paddingTop: '3%',
 			paddingBottom: '3%'
-		},
+			},
 		'@media (max-width: 600px)': {
 			width: '80%'
 		},
 		'@media (orientation: landscape)': {
-
+			
 			width: '40%',
 			padding: '2%'
 		}
