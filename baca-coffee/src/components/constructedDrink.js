@@ -38,9 +38,9 @@ const marks = {
 
 const ConstructedDrink = ({ selection, options, submitOrder, changeMilkSlider, milkLevel, toggleMilk }) => {
 
-    let drinkChoice = (selection.drink !== 'select') ? options.drinks.find(drink => drink.id === selection.drink) : "";
-    let beanChoice = (selection.bean !== 'select') ? options.beans.find(bean => bean.id === selection.bean) : false;
-    let milkChoice = (selection.milk !== 'select' && selection.milk !== 'disabled') ? options.milk.find(milk => milk.id === selection.milk) : false;
+    let drinkChoice = (selection.drink !== 'select') ? options.drinks[selection.drink] : "";
+    let beanChoice = (selection.bean !== 'select') ? options.beans[selection.bean] : false;
+    let milkChoice = (selection.milk !== 'select' && selection.milk !== 'disabled') ? options.milk[selection.milk] : false;
 
     let displayImage = drinkChoice.image ? drinkChoice.image : emptyCup;
 

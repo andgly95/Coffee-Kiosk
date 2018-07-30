@@ -2,6 +2,7 @@ body {
   background-image: url("./resources/coffee.jpg");
   background-repeat: no-repeat;
   background-size: cover;
+  overflow: hidden;
 }
 
 /*----App.js---*/

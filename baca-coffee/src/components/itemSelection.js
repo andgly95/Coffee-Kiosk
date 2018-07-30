@@ -29,7 +29,7 @@ const ItemSelection = ({option, selection, type, onSelect}) => {
 const styles = StyleSheet.create({
 	item: {
 		margin: '1%',
-		width: '45%',
+		width: '100%',
 		background: '#ADA996',
 		background: 'radial-gradient(#EAEAEA, #DBDBDB, #F2F2F2 25%, #ADA996 )',
 		borderRadius: '15%',

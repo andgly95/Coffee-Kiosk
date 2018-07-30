@@ -4,6 +4,7 @@ import BeanSelector from './components/beanSelector';
 import MilkSelector from './components/milkSelector';
 import ConstructedDrink from './components/constructedDrink';
 import ConfirmationScreen from './components/confirmationScreen';
+import { Carousel } from 'react-responsive-carousel';
 import { StyleSheet, css } from 'aphrodite';
 import ReactModal from 'react-modal';
 import axios from 'axios';
@@ -15,65 +16,71 @@ export default class App extends Component {
 		super(props);
 		this.state = {
 			options: {
-				drinks: [
-					{
+				drinks: {
+					0: {
 						name: "espresso",
 						status: 1,
 						addMilk: false,
 						image: require('./resources/d_Espresso.png'),
 						id: 0
 					},
-					{
+					1: {
 						name: "americano",
 						status: 1,
 						addMilk: false,
 						image: require('./resources/d_Americano.png'),
 						id: 1
 					},
-					{
+					2: {
 						name: "cappuccino",
 						status: 1,
 						addMilk: true,
 						image: require('./resources/d_Cappuccino.png'),
 						id: 2
 					},
-					{
+					3: {
 						name: "latte",
 						status: 1,
 						addMilk: true,
 						image: require('./resources/d_Latte.png'),
 						id: 3
 					}
-				],
-				beans: [
-					{
+				},
+				beans: {
+					4: {
 						name: "Stumptown Hair Bender",
 						status: 1,
 						image: require('./resources/b_Stumptown_Hair-Bender.png'),
-						id: 4
+						id: 4,
+						origin: 'Indonesia',
+						flavor: 'Citrus Dark Chocolate'
 					},
-					{
-						name: "Sey Ivan Molano Colombia",
+					5: {
+						name: "Sey Ivan Molano",
 						status: 1,
 						image: require('./resources/b_Sey_Ivan-Molano-Colombia.png'),
-						id: 5
+						id: 5,
+						origin: 'Colombia',
+						flavor: 'Tropical Fruits'
 					}
-				],
-				milk: [
-					{
-						name: "Battenkill Valley Whole Milk",
+				},
+				milk: {
+					6: {
+						name: "Whole Milk",
+						brand: "Battenkill Valley",
 						status: 1,
 						image: require('./resources/m_Battenkill_Whole_Milk.png'),
 						id: 6
 					},
-					{
-						name: "Barista Blend Almond Milk",
+					7: {
+						name: "Almond Milk",
+						brand: "Barista Blend",
 						status: 1,
 						image: require('./resources/m_Almond-Milk.png'),
 						id: 7
 					}
 
-				]
+				}
 			},
 			selection: {
 				drink: "select",
@@ -82,8 +89,7 @@ export default class App extends Component {
 			},
 			milkLevel: 'none',
 			name: "",
-			showPayment: false,
-			showSplashScreen: true
+			showPayment: false
 		}
 	}
 
@@ -118,9 +124,9 @@ export default class App extends Component {
 
 		let order = {
 			name: this.state.name,
-			drinkName: drinks.find((option) => option.id == selection.drink).name,
-			beanSelection: beans.find((option) => option.id == selection.bean).name,
-			milkSelection: ((this.state.selection.milk != "select" && this.state.selection.milk != "disabled")) ? (milk.find((option) => option.id == selection.milk).name) : 'no'
+			drinkName: drinks[selection.drink].name,
+			beanSelection: beans[selection.bean].name,
+			milkSelection: ((this.state.selection.milk != "select" && this.state.selection.milk != "disabled")) ? (milk[selection.milk].name) : 'no'
 		}
 		axios.get('http://10.105.44.41:1880/submit', {
 			params: { options: JSON.stringify(order) }
@@ -148,10 +154,6 @@ export default class App extends Component {
 		});
 	}
 
-	closeSplashScreen() {
-		this.setState({ showSplashScreen: false });
-	}
-
 	fakeSwipe() {
 		this.setState({
 			name: '"Name From Card"',
@@ -160,8 +162,7 @@ export default class App extends Component {
 	}
 
 	changeDrink(optionID) {
-		let selectedDrink = this.state.options.drinks.filter((option) => option.id === optionID);
-		selectedDrink = selectedDrink[0];
+		let selectedDrink = this.state.options.drinks[optionID];
 
 		let newSelection = this.state.selection;
 		let milkState = newSelection.milk;
@@ -203,7 +204,7 @@ export default class App extends Component {
 
 		if (milkLevel === 0) {
 			let updatedDrinks = this.state.options;
-			let americano = updatedDrinks.drinks.find((option) => option.name == "americano");
+			let americano = updatedDrinks.drinks['1'];
 			americano.addMilk = 'false';
 			americano.image = require('./resources/d_Americano.png')
 			let newSelection = this.state.selection;
@@ -255,36 +256,22 @@ export default class App extends Component {
 						/>
 					</ReactModal>
 
-					<ReactModal
-						isOpen={this.state.showSplashScreen}
-						contentLabel="Welcome Screen"
-						className={css(styles.welcome)}
-					>
-						<div>
-							<div className="welcometext"><b>Welcome to Truebird</b></div>
-							<div className="welcometext">*Insert Awesome Splash Screen Here</div>
-							<button className={css(styles.welcomeButton)} onClick={this.fakeSwipe.bind(this)}>Virtual Card Swipe</button>
-							<div className="welcometext">OR</div>
-							<button className={css(styles.welcomeButton)} onClick={this.closeSplashScreen.bind(this)}>Browse</button>
-							<div className="welcometext">to begin</div>
-						</div>
-
-					</ReactModal>
-
-					<ConstructedDrink
+					<DrinkSelector drinkSelection={this.state.selection.drink} drinks={this.state.options.drinks} changeDrink={this.changeDrink.bind(this)} />
+						
+					{/* <ConstructedDrink
 						selection={this.state.selection}
 						options={this.state.options}
 						submitOrder={this.openPayment.bind(this)}
 						changeMilkSlider={this.changeMilkSlider.bind(this)}
 						milkLevel={this.state.milkLevel}
 						toggleMilk={this.toggleMilk.bind(this)}
-					/>
+					/> */}
 					<div className={css(styles.selectorContainer)}>
-						<DrinkSelector drinkSelection={this.state.selection.drink} drinks={this.state.options.drinks} changeDrink={this.changeDrink.bind(this)} />
-						<div className={css(styles.bottomRow)}>
+						
+						
 							<BeanSelector beanSelection={this.state.selection.bean} beans={this.state.options.beans} changeBean={this.changeBean.bind(this)} />
 							<MilkSelector milkSelection={this.state.selection.milk} milk={this.state.options.milk} changeMilk={this.changeMilk.bind(this)} />
-						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -334,30 +321,6 @@ const styles = StyleSheet.create({
 		}
 	},
 
-	welcome: {
-		textAlign: 'center',
-		margin: '10%',
-		marginTop: '10%',
-		border: '3px solid black',
-		borderRadius: '2.5vw',
-		backgroundColor: '#8D6E63',
-		'@media (orientation: portrait)': {
-			fontSize: '5vw'
-		},
-		'@media (orientation: landscape)': {
-			fontSize: '2.5vw'
-		}
-	},
-	welcomeButton: {
-		padding: '3%',
-		borderRadius: '2.5vw',
-		'@media (orientation: portrait)': {
-			fontSize: '4vw'
-		},
-		'@media (orientation: landscape)': {
-			fontSize: '2vw'
-		}
-	},
 	selectorContainer: {
 		display: 'flex',
 		flexFlow: 'column nowrap',

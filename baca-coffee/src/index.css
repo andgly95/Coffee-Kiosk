@@ -1,3 +1,17 @@
+@font-face {
+  font-family: 'Brandon Grotesque';
+  src: local('Brandon_reg'), url(./fonts/Brandon_reg.otf) format('opentype');
+}
+@font-face {
+  font-family: 'Brandon Grotesque';
+  font-weight: light;
+  src: local('Brandon_light'), url(./fonts/Brandon_light.otf) format('opentype');
+}
+@font-face {
+  font-family: 'Union';
+  src: local('Union-Regular'), url(./fonts/Union-Regular.otf) format('opentype');
+}
+
 body {
   margin: 0;
   padding: 0;

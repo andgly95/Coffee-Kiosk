@@ -6,18 +6,22 @@ import { StyleSheet, css } from 'aphrodite';
 
 const BeanSelector = ({ beanSelection, beans, changeBean }) => {
 
-    let selected = "buttonContainer";
-    if (beanSelection !== "select") selected += ' buttonContainerSelected';
+    let selected = (beanSelection !== "select");
 
-    let beanButtons = beans.map(option => {
+    let beanButtons = Object.keys(beans).map(option => {
         return (
-            <ItemSelection option={option} selection={beanSelection} key={option.id} type='bean' onSelect={changeBean} />
+            <div className={css(styles.beanOption)}>
+            <ItemSelection option={beans[option]} selection={beanSelection} key={option.id} type='bean' onSelect={changeBean} />
+            <div><p>{beans[option].name}</p>
+            <p>Origin: {beans[option].origin}</p>
+            <p>{beans[option].flavor}</p></div>
+            </div>
         )
     })
     return (
-        <div className={css(styles.beansContainer)}>
-            <h3>Beans</h3>
-            <div className={selected}>
+        <div className={css(styles.beansContainer, selected && styles.buttonSelected)}>
+            <p className={css(styles.header)}>Beans</p>
+            <div className={css(styles.buttonContainer, )}>
                 {beanButtons}
             </div>
 
@@ -27,22 +31,46 @@ const BeanSelector = ({ beanSelection, beans, changeBean }) => {
 
 const styles = StyleSheet.create({
     beansContainer: {
-        fontFamily: '"FuturaMediumBT", "Trebuchet MS", Arial, sans-serif',
+        fontFamily: 'Brandon Grotesque',
         color: 'black',
         fontSize: 10,
-        backgroundColor: 'rgba(180, 179, 170, 0.627)',
+        backgroundColor: 'rgba(199, 217, 240, 0.627)',
         borderRadius: 25,
         margin: 10,
 
         '@media (orientation: portrait)': {
-            width: '44%',
-            fontSize: '2.5vw'
+            width: '90%',
+            fontSize: '2.25vw'
         },
         '@media (orientation: landscape)': {
-            width: '45%',
+            width: '90%',
             fontSize: '1.25vw'
         }
-    }
+    },
+    beanOption: {
+        display: 'grid',
+        gridTemplateColumns: '50% 50%'
+    },
+    buttonContainer: {
+        display: 'grid',
+        gridTemplateColumns: '50% 50%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(128, 128, 128, 0.623)',
+        borderRadius: '2.5vw'
+      },
+      buttonSelected: {
+        backgroundColor: 'rgba(243, 235, 76, 0.623)'
+      },
+      header: {
+        margin: '.5em',
+        '@media (orientation: portrait)': {
+            fontSize: '4vw'
+        },
+        '@media (orientation: landscape)': {
+            fontSize: '2vw'
+        }
+    },
 })
 
 BeanSelector.propTypes = {
@@ -50,7 +78,7 @@ BeanSelector.propTypes = {
         PropTypes.string,
         PropTypes.number
     ]),
-    beans: PropTypes.array,
+    beans: PropTypes.object,
     changeBean: PropTypes.func
 }
 

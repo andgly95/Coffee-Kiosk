@@ -6,17 +6,22 @@ import { StyleSheet, css } from 'aphrodite';
 
 const MilkSelector = ({ milkSelection, milk, changeMilk }) => {
 
-    let selected = "buttonContainer";
-    if (milkSelection !== "select") selected += ' buttonContainerSelected'; 
-    let milkButtons = milk.map(option => {
+    let selected = (milkSelection !== "select");
+
+    let disabled = (milkSelection === "disabled");
+
+    let milkButtons = Object.keys(milk).map(option => {
         return (
-            <ItemSelection option={option} selection={milkSelection} key={option.id} type='milk' onSelect={changeMilk} />
+            <div className={css(styles.milkOption)}>
+                <ItemSelection option={milk[option]} selection={milkSelection} key={option.id} type='milk' onSelect={changeMilk} />
+                <p>{milk[option].name}</p>
+            </div>
         )
     })
     return (
-        <div className={css(styles.milkContainer)}>
-            <h3>Milk</h3>
-            <div className={selected}>
+        <div className={css(styles.milkContainer, selected && styles.buttonSelected, disabled && styles.buttonDisabled)}>
+            <p className={css(styles.header)}>Milk</p>
+            <div className={css(styles.buttonContainer)}>
                 {milkButtons}
             </div>
 
@@ -26,32 +31,59 @@ const MilkSelector = ({ milkSelection, milk, changeMilk }) => {
 
 const styles = StyleSheet.create({
     milkContainer: {
-       fontFamily: '"FuturaMediumBT", "Trebuchet MS", Arial, sans-serif',
-       color: 'black',
-       backgroundColor: 'rgba(180, 179, 170, 0.627)',
-       fontSize: 10,
-       borderRadius: 25,
-       width: '44%',
-       margin: 10,
+        fontFamily: 'Brandon Grotesque',
+        color: 'black',
+        backgroundColor: 'rgba(199, 217, 240, 0.627)',
+        fontSize: 10,
+        borderRadius: 25,
+        width: '90%',
+        margin: 10,
 
-       '@media (orientation: portrait)': {
-           width: '44%',
-           fontSize: '2.5vw'
-       },
-       '@media (orientation: landscape)': {
-           width: '45%',
-           fontSize: '1.25vw'
-       }
-    
-     }
-   })
+        '@media (orientation: portrait)': {
+            width: '90%',
+            fontSize: '3vw'
+        },
+        '@media (orientation: landscape)': {
+            width: '90%',
+            fontSize: '1.5vw'
+        }
+
+    },
+    milkOption: {
+        display: 'grid',
+        gridTemplateColumns: '50% 50%'
+    },
+    buttonContainer: {
+        display: 'grid',
+        gridTemplateColumns: '50% 50%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(128, 128, 128, 0.623)',
+        borderRadius: '2.5vw'
+    },
+    buttonSelected: {
+        backgroundColor: 'rgba(243, 235, 76, 0.623)'
+    },
+    buttonDisabled: {
+        backgroundColor: 'rgba(27,30,68, 0.623)'
+    },
+    header: {
+        margin: '.5em',
+        '@media (orientation: portrait)': {
+            fontSize: '4vw'
+        },
+        '@media (orientation: landscape)': {
+            fontSize: '2vw'
+        }
+    }
+})
 
 MilkSelector.propTypes = {
     selection: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number
     ]),
-    drinks: PropTypes.array,
+    drinks: PropTypes.object,
     changeMilk: PropTypes.func
 }
 
