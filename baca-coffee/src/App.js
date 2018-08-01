@@ -96,6 +96,7 @@ export default class App extends Component {
 	componentDidMount() {
 		const images = this.importImages(require.context('./resources', false, /\.(png)$/));
 		console.log(images);
+
 	}
 
 	importImages(r) {
@@ -233,6 +234,7 @@ export default class App extends Component {
 	}
 
 	render() {
+		let complete = ((this.state.selection.drinks !== 'select') && (this.state.selection.bean !== 'select') && (this.state.selection.milk !== 'select') );
 		return (
 			<div className={css(styles.container)}>
 				<div className={css(styles.logo)}>
@@ -273,6 +275,7 @@ export default class App extends Component {
 							<MilkSelector milkSelection={this.state.selection.milk} milk={this.state.options.milk} changeMilk={this.changeMilk.bind(this)} />
 						
 					</div>
+					<div className={css(styles.order, complete && styles.appear)} onClick={this.openPayment.bind(this)}><span>PLACE ORDER</span></div>
 				</div>
 			</div>
 		);
@@ -320,13 +323,28 @@ const styles = StyleSheet.create({
 			padding: '2%'
 		}
 	},
-
+	order: {
+		marginLeft: 30,
+		marginRight: 30,
+		borderRadius: 10,
+		fontFamily: 'Union',
+		color: 'white',
+		backgroundColor: 'rgb(27,30,68)',
+		width: '90%',
+		paddingTop: 15,
+		paddingBottom: 15,
+		fontSize: 24,
+		verticalAlign: 'center',
+		border: '2px black solid',
+		display: 'none'
+	},
+	appear: {
+		display: 'block'
+	},
 	selectorContainer: {
 		display: 'flex',
 		flexFlow: 'column nowrap',
-		alignItems: 'center',
-		marginTop: '5%',
-		marginBottom: '5%'
+		alignItems: 'center'
 	},
 	bottomRow: {
 		display: 'flex',

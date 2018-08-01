@@ -33,11 +33,12 @@ const styles = StyleSheet.create({
     milkContainer: {
         fontFamily: 'Brandon Grotesque',
         color: 'black',
-        backgroundColor: 'rgba(199, 217, 240, 0.627)',
+        backgroundColor: 'rgba(199, 217, 240, .8)',
         fontSize: 10,
         borderRadius: 25,
         width: '90%',
         margin: 10,
+        border: '2px solid red',
 
         '@media (orientation: portrait)': {
             width: '90%',
@@ -62,10 +63,13 @@ const styles = StyleSheet.create({
         borderRadius: '2.5vw'
     },
     buttonSelected: {
-        backgroundColor: 'rgba(243, 235, 76, 0.623)'
+        border: '2px solid yellow'
     },
     buttonDisabled: {
-        backgroundColor: 'rgba(27,30,68, 0.623)'
+        backgroundColor: 'rgba(27,30,68, 0.623)',
+        border: '2px solid black',
+        display: 'none'
+        
     },
     header: {
         margin: '.5em',

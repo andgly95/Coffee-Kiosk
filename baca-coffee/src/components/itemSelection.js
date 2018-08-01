@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
 		transition: 500
 	},
 	itemChoose: {
-		borderColor: 'crimson',
-		borderWidth: 3,
+		// borderColor: 'crimson',
+		borderWidth: 1,
 		borderStyle: 'solid',
 		transition: 500
 	},

@@ -34,8 +34,9 @@ const styles = StyleSheet.create({
         fontFamily: 'Brandon Grotesque',
         color: 'black',
         fontSize: 10,
-        backgroundColor: 'rgba(199, 217, 240, 0.627)',
+        backgroundColor: 'rgba(199, 217, 240, 0.8)',
         borderRadius: 25,
+        border: '2px solid red',
         margin: 10,
 
         '@media (orientation: portrait)': {
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
         borderRadius: '2.5vw'
       },
       buttonSelected: {
-        backgroundColor: 'rgba(243, 235, 76, 0.623)'
+        border: '2px solid yellow'
       },
       header: {
         margin: '.5em',

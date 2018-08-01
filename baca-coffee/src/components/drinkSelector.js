@@ -14,6 +14,8 @@ const DrinkSelector = ({ drinkSelection, drinks, changeDrink }) => {
     let selected = (drinkSelection!=='select')? `You have selected ${drinks[drinkSelection].name}` : "Tap to select";
 
     let remove = (drinkSelection!=='select');
+
+    if(drinkSelection === 'select') drinkSelection = 1;
     let drinkButtons = Object.keys(drinks).map(option => {
         return (
             <ItemSelection option={drinks[option]} selection={drinkSelection} key={option.id} type='drink' onSelect={changeDrink} />
@@ -24,9 +26,9 @@ const DrinkSelector = ({ drinkSelection, drinks, changeDrink }) => {
         changeDrink(index);
     }
     return (
-        <div className={css(styles.drinksContainer, selected && styles.drinkSelected)}>
+        <div className={css(styles.drinksContainer, remove && styles.drinkSelected)}>
             <p className={css(styles.header)} >Drink Construction</p>
-            <Carousel selectedItem={drinkSelection} emulateTouch onChange={() => updateSlide} infiniteLoop={true} showStatus={false} showIndicators={false} showThumbs={false} className={css(styles.carousel, remove && styles.remove)}>
+            <Carousel selectedItem={drinkSelection} emulateTouch onChange={() => updateSlide} centerMode centerSlidePercentage={50} infiniteLoop={true} showStatus={false} showIndicators={false} showThumbs={false} className={css(styles.carousel, remove && styles.remove)}>
                 <Card className={css(styles.card)} onClick={() => changeDrink(0)}>
                     <CardMedia
                         className={css(styles.drinkImage)}
@@ -66,10 +68,11 @@ const styles = StyleSheet.create({
     drinksContainer: {
         fontFamily: 'Brandon Grotesque',
         color: 'black',
-        backgroundColor: 'rgba(199, 217, 240, 0.627)',
+        backgroundColor: 'rgba(199, 217, 240, 0.8)',
         borderRadius: 25,
+        border: '2px solid red',
         '@media (orientation: portrait)': {
-            width: '60%',
+            width: '90%',
             fontSize: '4vw'
         },
         '@media (orientation: landscape)': {
@@ -81,7 +84,7 @@ const styles = StyleSheet.create({
         paddingTop: 30
     },
     drinkSelected: {
-        backgroundColor: 'rgba(243, 235, 76, 0.627)',
+        border: '2px solid yellow',
     },
     drinkImage: {
         height: 0,
@@ -92,13 +95,10 @@ const styles = StyleSheet.create({
         margin: '.5em'
     },
     carousel: {
-        width: '80%',
+        width: '100%',
         margin: 'auto'
     },
-    remove: {
-        maxHeight: 0,
-        transition: 10000
-    }
+    
 })
 
 DrinkSelector.propTypes = {
