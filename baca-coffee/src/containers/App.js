@@ -1,87 +1,24 @@
 import React, { Component } from 'react';
-import DrinkSelector from './components/drinkSelector';
-import BeanSelector from './components/beanSelector';
-import MilkSelector from './components/milkSelector';
-import ConstructedDrink from './components/constructedDrink';
-import ConfirmationScreen from './components/confirmationScreen';
+import DrinkSelector from '../components/drinkSelector';
+import BeanSelector from '../components/beanSelector';
+import MilkSelector from '../components/milkSelector';
+import ConstructedDrink from '../components/constructedDrink';
+import ConfirmationScreen from '../components/confirmationScreen';
 import { Carousel } from 'react-responsive-carousel';
 import { StyleSheet, css } from 'aphrodite';
 import ReactModal from 'react-modal';
+import { connect } from 'react-redux';
+import { fetchOptions, selectDrink, selectBean, selectMilk } from '../actions';
+import { bindActionCreators } from 'redux';
 import axios from 'axios';
 
-require('./App.css');
+require('../App.css');
 
-export default class App extends Component {
+class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			options: {
-				drinks: {
-					0: {
-						name: "espresso",
-						status: 1,
-						addMilk: false,
-						image: require('./resources/d_Espresso.png'),
-						id: 0
-					},
-					1: {
-						name: "americano",
-						status: 1,
-						addMilk: false,
-						image: require('./resources/d_Americano.png'),
-						id: 1
-					},
-					2: {
-						name: "cappuccino",
-						status: 1,
-						addMilk: true,
-						image: require('./resources/d_Cappuccino.png'),
-						id: 2
-					},
-					3: {
-						name: "latte",
-						status: 1,
-						addMilk: true,
-						image: require('./resources/d_Latte.png'),
-						id: 3
-					}
-				},
-				beans: {
-					4: {
-						name: "Stumptown Hair Bender",
-						status: 1,
-						image: require('./resources/b_Stumptown_Hair-Bender.png'),
-						id: 4,
-						origin: 'Indonesia',
-						flavor: 'Citrus Dark Chocolate'
-					},
-					5: {
-						name: "Sey Ivan Molano",
-						status: 1,
-						image: require('./resources/b_Sey_Ivan-Molano-Colombia.png'),
-						id: 5,
-						origin: 'Colombia',
-						flavor: 'Tropical Fruits'
-					}
-				},
-				milk: {
-					6: {
-						name: "Whole Milk",
-						brand: "Battenkill Valley",
-						status: 1,
-						image: require('./resources/m_Battenkill_Whole_Milk.png'),
-						id: 6
-					},
-					7: {
-						name: "Almond Milk",
-						brand: "Barista Blend",
-						status: 1,
-						image: require('./resources/m_Almond-Milk.png'),
-						id: 7
-					}
-
-				}
-			},
+			options: this.props.options,
 			selection: {
 				drink: "select",
 				bean: "select",
@@ -93,16 +30,8 @@ export default class App extends Component {
 		}
 	}
 
-	componentDidMount() {
-		const images = this.importImages(require.context('./resources', false, /\.(png)$/));
-		console.log(images);
-
-	}
-
-	importImages(r) {
-		let images = {};
-		r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
-		return images;
+	componentWillMount() {
+		this.props.fetchOptions;
 	}
 
 	openPayment() {
@@ -207,7 +136,7 @@ export default class App extends Component {
 			let updatedDrinks = this.state.options;
 			let americano = updatedDrinks.drinks['1'];
 			americano.addMilk = 'false';
-			americano.image = require('./resources/d_Americano.png')
+			americano.image = require('../resources/d_Americano.png')
 			let newSelection = this.state.selection;
 			newSelection.milk = "disabled";
 			this.setState({
@@ -223,7 +152,7 @@ export default class App extends Component {
 		let updatedDrinks = this.state.options;
 		let americano = updatedDrinks.drinks.find((option) => option.name == "americano");
 		americano.addMilk = 'true';
-		americano.image = require('./resources/d_Americano_milk.png')
+		americano.image = require('../resources/d_Americano_milk.png')
 		let newSelection = this.state.selection;
 		newSelection.milk = "required";
 		this.setState({
@@ -234,11 +163,11 @@ export default class App extends Component {
 	}
 
 	render() {
-		let complete = ((this.state.selection.drinks !== 'select') && (this.state.selection.bean !== 'select') && (this.state.selection.milk !== 'select') );
+		let complete = ((this.state.selection.drinks !== 'select') && (this.state.selection.bean !== 'select') && (this.state.selection.milk !== 'select'));
 		return (
 			<div className={css(styles.container)}>
 				<div className={css(styles.logo)}>
-					<img src={require('./resources/logoWhite.png')} width='75%' />
+					<img src={require('../resources/logoWhite.png')} width='75%' />
 				</div>
 				<div className={css(styles.App)}>
 
@@ -258,8 +187,8 @@ export default class App extends Component {
 						/>
 					</ReactModal>
 
-					<DrinkSelector drinkSelection={this.state.selection.drink} drinks={this.state.options.drinks} changeDrink={this.changeDrink.bind(this)} />
-						
+					<DrinkSelector drinkSelection={this.state.selection.drink} drinks={this.state.options.drinks} changeDrink={this.props.selectDrink} />
+
 					{/* <ConstructedDrink
 						selection={this.state.selection}
 						options={this.state.options}
@@ -269,11 +198,11 @@ export default class App extends Component {
 						toggleMilk={this.toggleMilk.bind(this)}
 					/> */}
 					<div className={css(styles.selectorContainer)}>
-						
-						
-							<BeanSelector beanSelection={this.state.selection.bean} beans={this.state.options.beans} changeBean={this.changeBean.bind(this)} />
-							<MilkSelector milkSelection={this.state.selection.milk} milk={this.state.options.milk} changeMilk={this.changeMilk.bind(this)} />
-						
+
+
+						<BeanSelector beanSelection={this.state.selection.bean} beans={this.state.options.beans} changeBean={this.changeBean.bind(this)} />
+						<MilkSelector milkSelection={this.state.selection.milk} milk={this.state.options.milk} changeMilk={this.changeMilk.bind(this)} />
+
 					</div>
 					<div className={css(styles.order, complete && styles.appear)} onClick={this.openPayment.bind(this)}><span>PLACE ORDER</span></div>
 				</div>
@@ -281,6 +210,26 @@ export default class App extends Component {
 		);
 	}
 }
+
+function mapStateToProps(state) {
+	//Whatever is returned will show up as props in App
+	return {
+		options: state.options,
+		selectedDrink: state.selectedDrink,
+		selectedBean: state.selectedBean,
+		selectedMilk: state.selectedMilk
+	};
+}
+
+//Anything returned will end up as props in the container
+function mapDispatchToProps(dispatch) {
+	//Whenever selectDrink is called, the result shoudl be dispatched to all reducers
+	return bindActionCreators({ selectDrink: selectDrink, fetchOptions: fetchOptions, selectBean: selectBean, selectMilk: selectMilk }, dispatch)
+}
+
+//Promote App from component to container, needs to know about dispatch methods
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+
 const styles = StyleSheet.create({
 	container: {
 		alignItems: 'center',
@@ -313,12 +262,12 @@ const styles = StyleSheet.create({
 			width: '40%',
 			paddingTop: '3%',
 			paddingBottom: '3%'
-			},
+		},
 		'@media (max-width: 600px)': {
 			width: '80%'
 		},
 		'@media (orientation: landscape)': {
-			
+
 			width: '40%',
 			padding: '2%'
 		}
@@ -348,7 +297,7 @@ const styles = StyleSheet.create({
 	},
 	bottomRow: {
 		display: 'flex',
-  		flexDirection: 'row',
-  		justifyContent: 'center'
+		flexDirection: 'row',
+		justifyContent: 'center'
 	}
 })

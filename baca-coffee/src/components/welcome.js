@@ -9,12 +9,11 @@ const Welcome = () => {
     return (
         <div className={css(styles.welcome)}>
 
-            <img className={css(styles.logo)} src={require('../resources/primary-logo.PNG')} />
-            <div><b>Welcome to Truebird</b></div>
-            <Button className={css(styles.welcomeButton)}><Link to='/order' style={{textDecoration: 'none', color: 'white'}}>Virtual Card Swipe</Link></Button>
+            <img className={css(styles.logo)} src={require('../resources/emptycup-logo.png')} />
+            <Button className={css(styles.welcomeButton)}><Link to='/order' style={{textDecoration: 'none', color: 'black'}}>BROWSE RECIPES</Link></Button>
             
-            <Button className={css(styles.welcomeButton)}><Link to='/order' style={{textDecoration: 'none', color: 'white'}}>Browse</Link></Button>
-            <div>to begin</div>
+            <Button className={css(styles.welcomeButton, styles.primaryButton)}><Link to='/order' style={{textDecoration: 'none', color: 'black'}}>SWIPE CARD</Link></Button>
+            
         </div>
     )
 
@@ -24,29 +23,27 @@ const styles = StyleSheet.create({
     welcome: {
         fontFamily: 'Brandon Grotesque',
         textAlign: 'center',
-        color: 'white',
+        color: 'black',
         margin: '10%',
-        marginTop: '5%',
         border: '3px solid black',
         borderRadius: '2.5vw',
-        backgroundColor: '#1B1E44',
+        backgroundImage: require('../resources/wood.jpg'),
         '@media (orientation: portrait)': {
             fontSize: '5vw',
-            marginTop: '30%'
         },
         '@media (orientation: landscape)': {
             fontSize: '2.5vw'
         }
     },
     welcomeButton: {
-        margin: 30,
+        margin: 15,
+        width: '90%',
         fontFamily: 'Brandon Grotesque',
         textTransform: 'none',
         borderRadius: '2.5vw',
         border: 3,
         fontWeight: 'light',
-        width: '50%',
-        color: 'white',
+        color: 'black',
         border: '1px solid black',
         textAlign: 'center',
 		'@media (orientation: portrait)': {
@@ -56,9 +53,12 @@ const styles = StyleSheet.create({
 			fontSize: '2vw'
 		}
     },
+    primaryButton: {
+        backgroundColor: '#C7D9F0'
+    },
     logo: {
         '@media (orientation: portrait)': {
-			width: '40%'
+			width: '80%'
         },
         '@media (orientation: landscape)': {
 			width: '25%'

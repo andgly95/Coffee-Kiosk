@@ -1,5 +1,6 @@
 @font-face {
   font-family: 'Brandon Grotesque';
+  font-weight: regular;
   src: local('Brandon_reg'), url(./fonts/Brandon_reg.otf) format('opentype');
 }
 @font-face {

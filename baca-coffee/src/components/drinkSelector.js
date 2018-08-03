@@ -16,7 +16,7 @@ const DrinkSelector = ({ drinkSelection, drinks, changeDrink }) => {
     let remove = (drinkSelection!=='select');
 
     if(drinkSelection === 'select') drinkSelection = 1;
-    let drinkButtons = Object.keys(drinks).map(option => {
+    let drinkOptions = Object.keys(drinks).map(option => {
         return (
             <ItemSelection option={drinks[option]} selection={drinkSelection} key={option.id} type='drink' onSelect={changeDrink} />
         )
@@ -25,11 +25,12 @@ const DrinkSelector = ({ drinkSelection, drinks, changeDrink }) => {
         console.log(index);
         changeDrink(index);
     }
+    let selectionText = (drinks[drinkSelection].name)? drinks[drinkSelection].name : {};
     return (
+        <div>
         <div className={css(styles.drinksContainer, remove && styles.drinkSelected)}>
-            <p className={css(styles.header)} >Drink Construction</p>
             <Carousel selectedItem={drinkSelection} emulateTouch onChange={() => updateSlide} centerMode centerSlidePercentage={50} infiniteLoop={true} showStatus={false} showIndicators={false} showThumbs={false} className={css(styles.carousel, remove && styles.remove)}>
-                <Card className={css(styles.card)} onClick={() => changeDrink(0)}>
+                <Card className={css(styles.card)} onClick={() => changeDrink(drinks[drinkSelection])}>
                     <CardMedia
                         className={css(styles.drinkImage)}
                         image={require('../resources/espresso.png')}
@@ -37,28 +38,31 @@ const DrinkSelector = ({ drinkSelection, drinks, changeDrink }) => {
                     />
                     <p>Espresso</p>
                 </Card>
-                <Card className={css(styles.card)} onClick={() => changeDrink(1)}>
+                <Card className={css(styles.card)} onClick={() => changeDrink(drinks[drinkSelection])}>
                     <CardMedia
                         className={css(styles.drinkImage)}
                         image={require('../resources/americano.png')}
                         title="Americano"
                     /><p>Americano</p></Card>
-                <Card className={css(styles.card)} onClick={() => changeDrink(2)}><CardMedia
+                <Card className={css(styles.card)} onClick={() => changeDrink(drinks[drinkSelection])}><CardMedia
                     className={css(styles.drinkImage)}
                     image={require('../resources/cappuccino.png')}
                     title="Cappuccino"
                 /> <p>Cappuccino</p></Card>
-                <Card className={css(styles.card)} onClick={() => changeDrink(3)}><CardMedia
+                <Card className={css(styles.card)} onClick={() => changeDrink(drinks[drinkSelection])}><CardMedia
                     className={css(styles.drinkImage)}
                     image={require('../resources/latte.png')}
                     title="Americano"
                 /><p>Latte</p></Card>
             </Carousel>
-            {/* <div className={selected}>
-                {drinkButtons}
-            </div> */}
-            <p className={css(styles.header)}>{selected}</p>
-
+            </div>
+            <div>
+            <p className={css(styles.chooseDrink)}>CHOOSE A DRINK</p>
+            </div>
+            <div className={css(styles.drinkSelection)}>
+            <p className={css(styles.promptText)}>I would like an</p>
+            <p className={css(styles.responseText)}><i>{selectionText}</i></p>
+            </div>
         </div>
     );
 
@@ -68,11 +72,11 @@ const styles = StyleSheet.create({
     drinksContainer: {
         fontFamily: 'Brandon Grotesque',
         color: 'black',
+        textAlign: 'center',
         backgroundColor: 'rgba(199, 217, 240, 0.8)',
-        borderRadius: 25,
-        border: '2px solid red',
+        border: '2px solid white',
         '@media (orientation: portrait)': {
-            width: '90%',
+            width: '100%',
             fontSize: '4vw'
         },
         '@media (orientation: landscape)': {
@@ -91,9 +95,26 @@ const styles = StyleSheet.create({
         paddingTop: '56.25%', // 16:9
         backgroundSize: 'contain'
     },
+    drinkSelection: {
+        backgroundColor: '#B7CFD0'
+    },
+    promptText: {
+        fontFamily: 'Brandon Grotesque',
+        fontWeight: 'light'
+    },
+    responseText: {
+        fontFamily: 'Brandon Grotesque',
+        fontWeight: 'regular'
+    },
     header: {
         margin: '.5em'
     },
+	chooseDrink: {
+		fontFamily: 'Brandon Grotesque',
+		fontSize: 24,
+		textAlign: 'right',
+		color: 'white'	
+	},
     carousel: {
         width: '100%',
         margin: 'auto'
