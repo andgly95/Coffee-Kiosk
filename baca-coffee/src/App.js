@@ -8,6 +8,8 @@ import { StyleSheet, css } from 'aphrodite';
 import ReactModal from 'react-modal';
 import axios from 'axios';
 
+import recognizeMic from 'watson-speech/speech-to-text/recognize-microphone';
+
 require('./App.css');
 
 export default class App extends Component {
@@ -231,6 +233,75 @@ export default class App extends Component {
 		});
 	}
 
+	callVoiceToText() {
+		{
+
+			fetch('http://localhost:3002/api/speech-to-text/token')
+			.then((response) =>{
+				return response.text();
+			}).then((token) => {
+		
+			  console.log(token)
+			  var stream = recognizeMic({
+				  token: token,
+				  objectMode: true, // send objects instead of text
+				  extractResults: true, // convert {results: [{alternatives:[...]}], result_index: 0} to {alternatives: [...], index: 0}
+				  format: false, // optional - performs basic formatting on the results such as capitals an periods
+				  keywords: ['espresso','americano','latte','cappuccino', 'almond','whole','say','Stumptown'],
+				  keywords_threshold: .3
+			  });
+			  /**
+			   * Prints the users speech to the console
+			   * and assigns the text to the state.
+			   */
+			  stream.on('data',(data) => {
+				let voiceWord = data.alternatives[0].transcript;
+				if (voiceWord.includes('espresso')) this.changeDrink(0);
+				if (voiceWord.includes('Americano')||voiceWord.includes('americana')||voiceWord.includes('American')) this.changeDrink(1);
+				if (voiceWord.includes('cappuccino')) this.changeDrink(2);
+				if (voiceWord.includes('latte')) this.changeDrink(3);
+				if (voiceWord.includes('Stumptown')) this.changeBean(4);
+				if (voiceWord.includes('say')) this.changeBean(5);
+				if (voiceWord.includes('whole')) this.changeMilk(6);
+				if (voiceWord.includes('almond')) this.changeMilk(7);
+				if (voiceWord.includes('confirm')) this.openPayment();
+				if (voiceWord.includes('order')) this.submitOrder();
+
+				console.log(voiceWord);
+				}
+		
+				// console.log(data.alternatives[0].transcript)
+			  );
+			  stream.on('error', function(err) {
+				  console.log(err);
+			  });
+			  document.querySelector('#stop').onclick = stream.stop.bind(stream);
+			}).catch(function(error) {
+				console.log(error);
+			});
+		  };
+		// let voiceFile = require('./resources/Untitled.flac');
+		// axios({
+		// 	url: "https://stream.watsonplatform.net/speech-to-text/api/v1/recognize",
+		// 	method: 'post',
+		// 	// auth: {
+		// 		username: "aa5d42a1-9bb3-4811-beb9-a70884873a3f",
+		// 		password: "pqlvOaq2uVGO",
+		// 	// },
+		// 	headers: {
+		// 		"Content-Type": "audio/flac"
+		// 	},
+		// 	body: voiceFile
+		// }).then(function(response) {
+		// 	console.log(response.data);
+		// 	console.log(response.status);
+		// 	console.log(response.statusText);
+		// 	console.log(response.headers);
+		// 	console.log(response.config);
+		//   });
+		
+	}
+
 	render() {
 		return (
 			<div className={css(styles.container)}>
@@ -274,12 +345,14 @@ export default class App extends Component {
 					<ConstructedDrink
 						selection={this.state.selection}
 						options={this.state.options}
-						submitOrder={this.openPayment.bind(this)}
+						submitOrder={this.callVoiceToText.bind(this)}
 						changeMilkSlider={this.changeMilkSlider.bind(this)}
 						milkLevel={this.state.milkLevel}
 						toggleMilk={this.toggleMilk.bind(this)}
 					/>
+					
 					<div className={css(styles.selectorContainer)}>
+					<div className={css(styles.voiceText)} onClick={this.callVoiceToText.bind(this)}>Click to Voice Order</div>
 						<DrinkSelector drinkSelection={this.state.selection.drink} drinks={this.state.options.drinks} changeDrink={this.changeDrink.bind(this)} />
 						<div className={css(styles.bottomRow)}>
 							<BeanSelector beanSelection={this.state.selection.bean} beans={this.state.options.beans} changeBean={this.changeBean.bind(this)} />
@@ -333,7 +406,11 @@ const styles = StyleSheet.create({
 			padding: '2%'
 		}
 	},
-
+	voiceText: {
+		color: 'black',
+		fontSize: 12,
+		backgroundColor: '#8D6E63',
+	},
 	welcome: {
 		textAlign: 'center',
 		margin: '10%',
@@ -367,7 +444,7 @@ const styles = StyleSheet.create({
 	},
 	bottomRow: {
 		display: 'flex',
-  		flexDirection: 'row',
-  		justifyContent: 'center'
+		flexDirection: 'row',
+		justifyContent: 'center'
 	}
 })
